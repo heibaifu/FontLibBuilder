@@ -2,31 +2,33 @@ FontLibBuilder: 嵌入式字体库生成器。
 自动为嵌入式应用生成字体库。会在源码中自动寻找字符串，并为之生成字体库。可选按照模板生成文件。
 用法：
 	FontLibBuilder 
-		{ -i <Files> | -d <Directories> -e <Extensions> [-r] } 
-		-tmpl <Template File>
+		-i <Files>
+		{ -d <Directories> -e <Extensions> [-r] } 
+		-t <Template File>
 		-o <Output File>
 		-s <FontSize>
-		[--noindex]
-		[--encoding <Encoding>]
-		[--font <Font>]
+		[-c <Encoding>]
+		[-f "<Font>"]
+		[-v]
 
 解释：
-	-i: 输入文件名。可以为多个文件，例如 -i file1.cpp 或 -i file1.cpp file2.cpp。
-	-d：输入目录名。可以为多个目录。
-	-e: 要查找的文件扩展名。可以为多种扩展名。
-	-r: 递归遍历子文件夹。
-	-tmpl: 指定输出模板文件。
+	-i 或 --input: 输入文件名。可以为多个文件，例如 -i file1.cpp 或 -i file1.cpp file2.cpp。
+	-d 或 --directories：输入目录名。可以为多个目录。
+	-e 或 --extensions: 要查找的文件扩展名。可以为多种扩展名，如 -e .cpp .c
+	-r 或 --recursive: 递归遍历子文件夹。
+	-t 或 --template: 指定输出模板文件。
 		模板输出占位符：
 			Data: 以十六进制数输出的字库数据，例如 0001AB。
 			DataArray: 以 C 风格输出的字库数据，例如 0x00, 0x01, 0xAB。
 			DataLen: 表示资库数据的长度。
 			IndexArray: 以 C 风格输出的字库索引数据。
 			IndexLen: 表示字库索引长度。
-			CharLen: 表示2
+			CharLen: 表示单个字符的长度，以字节为单位。不同的编码方式可能拥有不同的长度，例如，UTF-8 是 3 字节而 GB2312 是 2 字节。
 			FontSize: 同命令行参数中的 TextSize。
 		模板文件将以 ### 来标识占位符。
 		例如，当数据为 0001 时，会将文件中的 ###Data### 替换为 0x00, 0x01，###DataLen### 替换为 2。
-	-o: 输出文件名。
-	-s: 表示全局字符大小。每个字符都将占用 FontSize^2 的空间（不足 1 字节按 1 字节计），但是将能够获得实际显示大小。
-	--noindex: 指示生成器不要生成索引数据，字库数据将以“简易”模式存储。
-	--encoding: 指示生成器要使用的编码。
+	-o 或 --output: 输出文件名。
+	-s 或 --fontsize: 表示全局字符大小。每个字符都将占用 FontSize^2 的空间（不足 1 字节按 1 字节计），但是将能够获得实际显示大小。
+	-c 或 --encoding: 指示生成器要使用的编码。
+	-f 或 --font: 指示生成器要使用的字体。
+	-v 或 --verbose: 输出详细日志信息。

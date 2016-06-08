@@ -39,5 +39,10 @@ namespace FontLibBuilder
         [Option('v', "verbose", Required = false)]
         public bool Verbose { get; set; }
 
+        [HelpOption]
+        public string GetUsage()
+        {
+            return FontLibBuilder.Properties.Resources.Usage;
+        }
     }
 }
