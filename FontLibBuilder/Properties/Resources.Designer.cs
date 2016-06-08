@@ -59,5 +59,34 @@ namespace FontLibBuilder.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   查找类似 FontLibBuilder: 嵌入式字体库生成器。
+        ///自动为嵌入式应用生成字体库。会在源码中自动寻找字符串，并为之生成字体库。可选按照模板生成文件。
+        ///用法：
+        ///	FontLibBuilder 
+        ///		{ -i &lt;Files&gt; | -d &lt;Directories&gt; -e &lt;Extensions&gt; [-r] } 
+        ///		-tmpl &lt;Template File&gt;
+        ///		-o &lt;Output File&gt;
+        ///		-s &lt;FontSize&gt;
+        ///		[--noindex]
+        ///		[--encoding &lt;Encoding&gt;]
+        ///		[--font &lt;Font&gt;]
+        ///
+        ///解释：
+        ///	-i: 输入文件名。可以为多个文件，例如 -i file1.cpp 或 -i file1.cpp file2.cpp。
+        ///	-d：输入目录名。可以为多个目录。
+        ///	-e: 要查找的文件扩展名。可以为多种扩展名。
+        ///	-r: 递归遍历子文件夹。
+        ///	-tmpl: 指定输出模板文件。
+        ///		模板输出占位符：
+        ///			Data: 以十六进制数输出的字库数据，例如 0001AB。
+        ///			DataArray: 以 C 风格输出的字库数据，例如 0x [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        /// </summary>
+        internal static string Usage {
+            get {
+                return ResourceManager.GetString("Usage", resourceCulture);
+            }
+        }
     }
 }
