@@ -73,8 +73,8 @@ namespace FontLibBuilder
                     default:
                         return;
                 }
-                string timeString = ShowTime ? string.Format(" {0:HH:mm:ss}", DateTime.Now) : "";
-                string content = string.Format("{0}{1} - {2}", typeString, timeString, message);
+                string timeString = ShowTime ? string.Format(" {0:HH:mm:ss} -", DateTime.Now) : "";
+                string content = string.Format("{0}{1} {2}", typeString, timeString, message);
                 ConsoleColor temp = Console.ForegroundColor;
                 Console.ForegroundColor = color;
                 Console.WriteLine(content);
