@@ -9,13 +9,13 @@ namespace FontLibBuilder
 {
     class Options
     {
-        [OptionList('i', "input")]
+        [OptionList('i', "input", Separator = ',')]
         public IEnumerable<string> InputFiles { get; set; }
 
-        [OptionList('d', "directories")]
+        [OptionList('d', "directories", Separator = ',')]
         public IEnumerable<string> InputDirectories { get; set; }
 
-        [OptionList('e', "extensions")]
+        [OptionList('e', "extensions", Separator = ',')]
         public IEnumerable<string> FileExtensions { get; set; }
 
         [Option('r', "recursive")]
@@ -30,7 +30,7 @@ namespace FontLibBuilder
         [Option('s', "fontsize", Required = true)]
         public int FontSize { get; set; }
 
-        [Option('c', "encoding", Required = false, DefaultValue = "UTF8")]
+        [Option('c', "encoding", Required = false, DefaultValue = "UTF-8")]
         public string Encoding { get; set; }
 
         [Option('f', "Font", Required = false)]
