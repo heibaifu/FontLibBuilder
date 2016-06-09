@@ -21,9 +21,6 @@ namespace FontLibBuilder
         [Option('r', "recursive")]
         public bool Recursive { get; set; }
 
-        [Option('t', "template", Required = true)]
-        public string Template { get; set; }
-
         [Option('o', "output", Required = true)]
         public string Output { get; set; }
 

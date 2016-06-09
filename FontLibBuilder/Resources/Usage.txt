@@ -16,7 +16,8 @@ FontLibBuilder: 嵌入式字体库生成器。
 	-d 或 --directories：输入目录名。可以为多个目录。
 	-e 或 --extensions: 要查找的文件扩展名。可以为多种扩展名，如 -e .cpp .c
 	-r 或 --recursive: 递归遍历子文件夹。
-	-t 或 --template: 指定输出模板文件。
+	-o 或 --output: 指定模板及输出文件。
+		请以冒号分割模板及输出文件名，逗号分隔不同的模板和输出。例如：fontlibheader.tmpl:header.h,fontlibsource.tmpl:source.c。
 		模板输出占位符：
 			Data: 以十六进制数输出的字库数据，例如 0001AB。
 			DataArray: 以 C 风格输出的字库数据，例如 0x00, 0x01, 0xAB。
@@ -27,7 +28,6 @@ FontLibBuilder: 嵌入式字体库生成器。
 			FontSize: 同命令行参数中的 TextSize。
 		模板文件将以 ### 来标识占位符。
 		例如，当数据为 0001 时，会将文件中的 ###Data### 替换为 0x00, 0x01，###DataLen### 替换为 2。
-	-o 或 --output: 输出文件名。
 	-s 或 --fontsize: 表示全局字符大小。每个字符都将占用 FontSize^2 的空间（不足 1 字节按 1 字节计），但是将能够获得实际显示大小。
 	-c 或 --encoding: 指示生成器要使用的编码。
 	-f 或 --font: 指示生成器要使用的字体。
