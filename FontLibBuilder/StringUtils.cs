@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FontLibBuilder
 {
-    class Utils
+    class StringUtils
     {
         public static string EscapeString(string source)
         {

@@ -51,14 +51,9 @@ namespace FontLibBuilder
                 using (StreamReader reader = new StreamReader(file.OpenRead(), Encoding.GetEncoding(options.Encoding), true))
                 {
                     content = reader.ReadToEnd();
-                    chars.UnionWith(Utils.SearchForStrings(content).Select(str => Utils.EscapeString(str)).SelectMany(str => str.ToCharArray()));
+                    chars.UnionWith(StringUtils.SearchForStrings(content).Select(str => StringUtils.EscapeString(str)).SelectMany(str => str.ToCharArray()));
                 }
             }
-
-
-
         }
-
-       
     }
 }
