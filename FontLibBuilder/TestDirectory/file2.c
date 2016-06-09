@@ -1,4 +1,4 @@
-#include "stdio.h"		// Preprocessor header should not be included
+﻿#include "stdio.h"		// Preprocessor header should not be included
 
 int main()
 {
@@ -14,5 +14,5 @@ int main()
 	string str8 = "Multi text in single line"; string str9 = "Second Text in line";
 	string str10 = "Text with // comment mark in single line"; string str11 = "Text with # precompiler mark";
 	string str10 = "Text with // comment mark in single line"; string str11 = "Text with # precompiler mark";
-}
+	string str11 = "Text with special characters: 汉字 ひらがな 平仮名 漢字 (●'◡'●) 😗 😙 😚 "
 }
