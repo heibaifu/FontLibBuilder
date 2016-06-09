@@ -40,6 +40,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -48,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommonUtils.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="Program.cs" />
@@ -58,6 +60,8 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="StringUtils.cs" />
+    <Compile Include="TextUtils.cs" />
+    <Compile Include="NativeMethods.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
