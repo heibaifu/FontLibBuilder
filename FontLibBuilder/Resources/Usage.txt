@@ -23,6 +23,7 @@ FontLibBuilder: 嵌入式字体库生成器。
 			DataLen: 表示资库数据的长度。
 			IndexArray: 以 C 风格输出的字库索引数据。
 			IndexLen: 表示字库索引长度。
+			Metadata: 表示原数据。
 			CharLen: 表示单个字符的长度，以字节为单位。不同的编码方式可能拥有不同的长度，例如，UTF-8 是 3 字节而 GB2312 是 2 字节。
 			FontSize: 同命令行参数中的 TextSize。
 		模板文件将以 ### 来标识占位符。
