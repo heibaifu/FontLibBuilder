@@ -11,7 +11,14 @@ namespace FontLibBuilder
 {
     class TextUtils
     {
-        public static byte[] GenerateByteDataForChar(char ch, Font font, int size)
+        /// <summary>
+        /// 生成指定字符的图像数据。
+        /// </summary>
+        /// <param name="ch">要生成的字符。</param>
+        /// <param name="font">要使用的字体。</param>
+        /// <param name="size">目标字符大小。</param>
+        /// <returns>一个二元组，第一项表示生成的数据，第二项表示字符的实际宽度。</returns>
+        public static Tuple<byte[], int> GenerateImageForChar(char ch, Font font, int size)
         {
             Bitmap bmp = new Bitmap(100, 100);
             Graphics g = Graphics.FromImage(bmp);
@@ -84,7 +91,7 @@ namespace FontLibBuilder
                         result[byteIndex] &= (byte)~mask;
                 }
             }
-            return result;
+            return new Tuple<byte[], int>(result, metrics.gmBlackBoxX);
         }
 
     }
