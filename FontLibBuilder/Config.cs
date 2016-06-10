@@ -21,8 +21,8 @@ namespace FontLibBuilder
         [Option('r', "recursive")]
         public bool Recursive { get; set; }
 
-        [Option('o', "output", Required = true)]
-        public string Output { get; set; }
+        [OptionList('o', "output", Required = true, Separator = ',')]
+        public string[] Output { get; set; }
 
         [Option('s', "fontsize", Required = true)]
         public int FontSize { get; set; }
