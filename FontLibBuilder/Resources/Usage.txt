@@ -22,9 +22,8 @@ FontLibBuilder: 嵌入式字体库生成器。
 			Data: 以十六进制数输出的字库数据，例如 0001AB。
 			DataArray: 以 C 风格输出的字库数据，例如 0x00, 0x01, 0xAB。
 			DataLen: 表示资库数据的长度。
-			Index: 以十六进制输出的索引数据。
+			Index: 以十六进制输出的索引数据。索引数据的长度始终为 256 个 unsigned short（512 字节）。
 			IndexArray: 以 C 风格输出的字库索引数据。
-			IndexLen: 表示字库索引长度。
 			FontSize: 同命令行参数中的 TextSize。
 			ImageSize: 表示单个字符所占的空间大小，以字节为单位。
 		模板文件将以 ### 来标识占位符。
