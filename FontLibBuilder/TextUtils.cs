@@ -91,7 +91,7 @@ namespace FontLibBuilder
                         result[byteIndex] &= (byte)~mask;
                 }
             }
-            return new Tuple<byte[], int>(result, metrics.gmBlackBoxX);
+            return Tuple.Create(result, metrics.gmBlackBoxX);
         }
 
     }
