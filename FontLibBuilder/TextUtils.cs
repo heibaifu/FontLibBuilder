@@ -85,9 +85,10 @@ namespace FontLibBuilder
             byte[] result = new byte[dataSize];
 
             // 空格没有字模数据，直接跳过，并取其高度一半作为宽度。
+            int actualWidth;
             if (len == 0)
             {
-                metrics.gmBlackBoxX = size / 2;
+                actualWidth = size / 2;
             }
             else
             {
@@ -118,8 +119,16 @@ namespace FontLibBuilder
                         }
                     }
                 }
+                if (metrics.gmBlackBoxX > (size / 2))
+                {
+                    actualWidth = size;
+                }
+                else
+                {
+                    actualWidth = size / 2;
+                }
             }
-            return Tuple.Create(result, metrics.gmBlackBoxX);
+            return Tuple.Create(result, actualWidth);
         }
 
     }
