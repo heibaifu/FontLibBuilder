@@ -14,5 +14,5 @@ int main()
 	string str8 = "Multi text in single line"; string str9 = "Second Text in line";
 	string str10 = "Text with // comment mark in single line"; string str11 = "Text with # precompiler mark";
 	string str10 = "Text with // comment mark in single line"; string str11 = "Text with # precompiler mark";
-	string str11 = "Text with special characters: 汉字 ひらがな 平仮名 漢字 (●'◡'●) 😗 😙 😚 "
+	string str11 = "Text with special characters: 汉字 ひらがな 平仮名 漢字 您要查找的资源可能已被删除，已更改名称或者暂时不可用。"
 }
