@@ -64,6 +64,41 @@ namespace FontLibBuilder
                 table[i] = (byte)temp;
             }
         }
+
+        public static string ToHexString(this byte[] bytes)
+        {
+            return string.Concat(bytes.Select(b => b.ToString("X2")).ToArray());
+        }
+
+        public static string ToCStyleArray(this byte[] bytes)
+        {
+            return string.Concat(bytes.Select(b => $"0x{b.ToString("X2")}, "));
+        }
+
+        public static string ReplaceAll(this string source, Replacement[] replacements)
+        {
+            string result = source;
+            foreach (var replace in replacements)
+            {
+                if (source.Contains(replace.OldValue))
+                {
+                    result = result.Replace(replace.OldValue, replace.NewValue());
+                }
+            }
+            return result;
+        }
+    }
+
+    public class Replacement
+    {
+        public string OldValue { get; set; }
+        public Func<string> NewValue { get; set; }
+
+        public Replacement(string oldValue, Func<string> newValue)
+        {
+            OldValue = oldValue;
+            NewValue = newValue;
+        }
     }
 
     public class Pair<T1, T2>
@@ -71,7 +106,7 @@ namespace FontLibBuilder
         public T1 Item1 { get; set; }
         public T2 Item2 { get; set; }
 
-        public static Pair<T1,T2> Create(T1 item1, T2 item2)
+        public static Pair<T1, T2> Create(T1 item1, T2 item2)
         {
             return new Pair<T1, T2>() { Item1 = item1, Item2 = item2 };
         }
