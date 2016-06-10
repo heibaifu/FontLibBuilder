@@ -20,49 +20,56 @@ namespace FontLibBuilder
         /// <returns>一个二元组，第一项表示生成的数据，第二项表示字符的实际宽度。</returns>
         public static Tuple<byte[], int> GenerateImageForChar(char ch, Font font, int size)
         {
-            Bitmap bmp = new Bitmap(100, 100);
-            Graphics g = Graphics.FromImage(bmp);
             // Ported from http://download.csdn.net/download/yuanyunzhu/5513441
-            IntPtr hdc = g.GetHdc();
-            IntPtr fontHandle = font.ToHfont();
-            NativeMethods.SelectObject(hdc, fontHandle);
-
+            uint len;
+            byte[] buffer;
             GLYPHMETRICS metrics;
-            MAT2 mat2 = new MAT2()
+
+            Bitmap bmp = new Bitmap(1, 1);
+            using (Graphics g = Graphics.FromImage(bmp))
             {
-                eM11 = new FIXED(0, 1),
-                eM12 = new FIXED(0, 0),
-                eM21 = new FIXED(0, 0),
-                eM22 = new FIXED(0, 1)
-            };
+                IntPtr hdc = g.GetHdc();
+                IntPtr fontHandle = font.ToHfont();
+                NativeMethods.SelectObject(hdc, fontHandle);
 
-            uint len = NativeMethods.GetGlyphOutline(hdc,
-                (uint)ch,
-                1,  // GGO_BITMAP
-                out metrics,
-                0,
-                IntPtr.Zero,
-                ref mat2
-            );
+                MAT2 mat2 = new MAT2()
+                {
+                    eM11 = new FIXED(0, 1),
+                    eM12 = new FIXED(0, 0),
+                    eM21 = new FIXED(0, 0),
+                    eM22 = new FIXED(0, 1)
+                };
 
-            byte[] buffer = new byte[len];
-
-            if (len != 0)
-            {
-                GCHandle bufferHandle = GCHandle.Alloc(buffer, GCHandleType.Pinned);
-
-                NativeMethods.GetGlyphOutline(
-                    hdc,
+                len = NativeMethods.GetGlyphOutline(hdc,
                     (uint)ch,
-                    1,
+                    1,  // GGO_BITMAP
                     out metrics,
-                    len,
-                    bufferHandle.AddrOfPinnedObject(),
-                    ref mat2);
-            }
+                    0,
+                    IntPtr.Zero,
+                    ref mat2
+                );
 
-            g.ReleaseHdc(hdc);
-            g.Flush();
+                buffer = new byte[len];
+
+                if (len != 0)
+                {
+                    GCHandle bufferHandle = GCHandle.Alloc(buffer, GCHandleType.Pinned);
+
+                    NativeMethods.GetGlyphOutline(
+                        hdc,
+                        (uint)ch,
+                        1,
+                        out metrics,
+                        len,
+                        bufferHandle.AddrOfPinnedObject(),
+                        ref mat2);
+
+                    bufferHandle.Free();
+                }
+
+                g.ReleaseHdc(hdc);
+                g.Flush();
+            }
 
             uint rows = len / 4;
 
@@ -98,7 +105,7 @@ namespace FontLibBuilder
                         byte mask = (byte)(1 << bitInByteIndex);
                         int sourceIndex = i * bitCount + j;
                         // 有时会出问题
-                        if (sourceIndex > orig.Length)
+                        if (sourceIndex < orig.Length)
                         {
                             if (orig[sourceIndex])
                                 result[byteIndex] |= mask;
