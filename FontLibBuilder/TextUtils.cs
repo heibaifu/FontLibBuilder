@@ -131,5 +131,27 @@ namespace FontLibBuilder
             return Tuple.Create(result, actualWidth);
         }
 
+        public static int GetImageSize(int size, bool anchorToByte)
+        {
+            int dataSize;
+            if (anchorToByte)
+            {
+                dataSize = size * size / 8;
+                if (size * size % 8 != 0)
+                {
+                    dataSize += 1;
+                }
+            }
+            else
+            {
+                int lineSize = size / 8;
+                if(size % 8 != 0)
+                {
+                    lineSize += 1;
+                }
+                dataSize = lineSize * size;
+            }
+            return dataSize;
+        }
     }
 }
