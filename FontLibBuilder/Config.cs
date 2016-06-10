@@ -22,7 +22,7 @@ namespace FontLibBuilder
         public bool Recursive { get; set; }
 
         [OptionList('o', "output", Required = true, Separator = ',')]
-        public string[] Output { get; set; }
+        public IEnumerable<string> Output { get; set; }
 
         [Option('s', "fontsize", Required = true)]
         public int FontSize { get; set; }
