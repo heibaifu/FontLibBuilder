@@ -182,6 +182,7 @@ namespace FontLibBuilder
                 });
 
                 File.WriteAllText(outputFileName, template);
+                Log.S($"{outputFileName} 写入完成。");
             }
         }
     }
