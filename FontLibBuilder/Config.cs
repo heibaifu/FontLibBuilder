@@ -24,6 +24,9 @@ namespace FontLibBuilder
         [OptionList('o', "output", Required = true, Separator = ',')]
         public IEnumerable<string> Output { get; set; }
 
+        [Option('a', "anchor-to-byte")]
+        public bool AnchorToByte { get; set; }
+
         [Option('s', "fontsize", Required = true)]
         public int FontSize { get; set; }
 

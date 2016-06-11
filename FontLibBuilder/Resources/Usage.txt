@@ -7,6 +7,7 @@ FontLibBuilder: 嵌入式字体库生成器。
 		-t <Template File>
 		-o <Output File>
 		-s <FontSize>
+		[-a]
 		[-c <Encoding>]
 		[-f "<Font>"]
 		[-v]
@@ -32,3 +33,4 @@ FontLibBuilder: 嵌入式字体库生成器。
 	-c 或 --encoding: 指示生成器要使用的编码。
 	-f 或 --font: 指示生成器要使用的字体。
 	-v 或 --verbose: 输出详细日志信息。
+	-a 或 --anchor-to-byte: 指示生成器将每行 / 列对齐到字节。
