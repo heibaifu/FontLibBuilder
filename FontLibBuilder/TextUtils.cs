@@ -17,8 +17,10 @@ namespace FontLibBuilder
         /// <param name="ch">要生成的字符。</param>
         /// <param name="font">要使用的字体。</param>
         /// <param name="size">目标字符大小。</param>
+        /// <param name="anchorToByte">指示是否要将每行 / 列对齐到字节。</param>
+        /// <param name="orientation">指示生成字符的方向。此选项暂时无效，所有结果都垂直排列！</param>
         /// <returns>一个二元组，第一项表示生成的数据，第二项表示字符的实际宽度。</returns>
-        public static Tuple<byte[], int> GenerateImageForChar(char ch, Font font, int size)
+        public static Tuple<byte[], int> GenerateImageForChar(char ch, Font font, int size, bool anchorToByte, OrderOrientation orientation)
         {
             // Ported from http://download.csdn.net/download/yuanyunzhu/5513441
             uint len;
@@ -96,27 +98,46 @@ namespace FontLibBuilder
                 int nByteCount = ((metrics.gmBlackBoxX + 31) >> 5) << 2;
 
                 int bitCount = nByteCount * 8;
-                for (int i = 0; i < metrics.gmBlackBoxY && i < size; i++)
+                int currentResultBitIndex = 0;
+
+                // 目前的代码仅支持以垂直方式对齐。
+                for (int j = 0; j < bitCount && j < size; j++)
                 {
-                    for (int j = 0; j < bitCount && j < size; j++)
+                    for (int i = 0; i < size; i++, currentResultBitIndex++)
                     {
-                        int index = i * size + j;
+                        // 如果已经超出实际大小
+                        if (i >= metrics.gmBlackBoxY)
+                        {
+                            continue;
+                        }
+                        int index = currentResultBitIndex;
+
+                        /* switch (orientation)
+                        {
+                            case OrderOrientation.Vertical:
+                                //index = i * size + j;
+                                break;
+                            case OrderOrientation.Horizontal:
+                                throw new NotImplementedException("Not supported yet.");
+                            default:
+                                throw new Exception();
+                        }*/
+
                         int byteIndex = index / 8;
                         int bitInByteIndex = index % 8;
                         byte mask = (byte)(1 << bitInByteIndex);
+
                         int sourceIndex = i * bitCount + j;
-                        // 有时会出问题
-                        if (sourceIndex < orig.Length)
-                        {
-                            if (orig[sourceIndex])
-                                result[byteIndex] |= mask;
-                            else
-                                result[byteIndex] &= (byte)~mask;
-                        }
+                        if (orig[sourceIndex])
+                            result[byteIndex] |= mask;
                         else
-                        {
-                            Log.C($"出现问题，字模数据长度不够。当前位置：{sourceIndex}，实际长度：{orig.Length}");
-                        }
+                            result[byteIndex] &= (byte)~mask;
+                    }
+
+                    if(currentResultBitIndex % 8 != 0)
+                    {
+                        // 对齐到字节
+                        currentResultBitIndex = (currentResultBitIndex / 8 + 1) * 8;
                     }
                 }
                 if (metrics.gmBlackBoxX > (size / 2))
@@ -145,7 +166,7 @@ namespace FontLibBuilder
             else
             {
                 int lineSize = size / 8;
-                if(size % 8 != 0)
+                if (size % 8 != 0)
                 {
                     lineSize += 1;
                 }
@@ -153,5 +174,22 @@ namespace FontLibBuilder
             }
             return dataSize;
         }
+    }
+
+    /// <summary>
+    /// 指示图像的方向。
+    /// </summary>
+    enum OrderOrientation
+    {
+        /// <summary>
+        /// 表示图像将被水平（横向）填充至数组。
+        /// 例如，数组第一位为第一行第一列，第二位为第一行第二列，依此类推。
+        /// </summary>
+        Vertical,
+        /// <summary>
+        /// 表示图像将被竖直（纵向）填充至数组。
+        /// 例如，数组第一位为第一行第一列，第二位为第二行第一列，依此类推。
+        /// </summary>
+        Horizontal
     }
 }
