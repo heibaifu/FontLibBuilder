@@ -181,7 +181,7 @@ namespace FontLibBuilder
                     new Replacement("###ImageSize###",() =>TextUtils.GetImageSize(options.FontSize, options.AnchorToByte).ToString())
                 });
 
-                File.WriteAllText(outputFileName, template);
+                File.WriteAllText(outputFileName, result);
                 Log.S($"{outputFileName} 写入完成。");
             }
         }
