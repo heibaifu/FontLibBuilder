@@ -83,8 +83,9 @@ namespace FontLibBuilder
                 dataSize += 1;
             }
 
-            BitArray orig = new BitArray(buffer);
-            //BitArray arr = new BitArray(dataSize * 8, false);
+            // 将每个字节的每位翻转（若原本是10011000，翻转后即为00011001，顺序颠倒）
+            byte[] reversedMatrix = buffer.Select(b => CommonUtils.ReverseByte(b)).ToArray();
+            BitArray orig = new BitArray(reversedMatrix);
 
             byte[] result = new byte[dataSize];
 
