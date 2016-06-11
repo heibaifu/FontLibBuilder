@@ -1,4 +1,6 @@
-﻿using System;
+﻿#define PRINT_TO_CONSOLE
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
@@ -95,9 +97,26 @@ namespace FontLibBuilder
             else
             {
                 // Ported from http://bbs.csdn.net/topics/370061244
+                // 生成结果中每行的字节数。
                 int nByteCount = ((metrics.gmBlackBoxX + 31) >> 5) << 2;
 
                 int bitCount = nByteCount * 8;
+
+                // 以下代码可以原样将文字打入控制台，供参考：
+                // （若要取消，仅需去除文件头的#define）
+#if PRINT_TO_CONSOLE
+                Console.WriteLine($"=== Begin printing character '{ch}' ===");
+                for (int i = 0; i < metrics.gmBlackBoxY && i < size; i++)
+                {
+                    for (int j = 0; j < bitCount && j < size; j++)
+                    {
+                        Console.Write(orig[i * bitCount + j] ? " *" : "  ");
+                    }
+                    Console.WriteLine("|");
+                }
+                Console.WriteLine($"=== End ===");
+#endif
+
                 int currentResultBitIndex = 0;
 
                 // 目前的代码仅支持以垂直方式对齐。
